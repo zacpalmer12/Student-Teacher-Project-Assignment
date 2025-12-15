@@ -1,10 +1,11 @@
 #pragma once
 #include <string>
 
+using namespace std;
 struct Project {
     int id;
-    std::string proposer;
+    string proposer;
     int multiplicity;
     int assigned = 0;
-    std::string subject;
+    string subject;
 };

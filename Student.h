@@ -1,11 +1,12 @@
 #pragma once
+using namespace std;
 #include <string>
 #include <vector>
 
 struct Student {
-    std::string id;
-    std::vector<int> choices;
+    string id;
+    vector<int> choices;
     int assignedProject = -1;
-    std::string assignedSupervisor;
+    string assignedSupervisor;
 };
 

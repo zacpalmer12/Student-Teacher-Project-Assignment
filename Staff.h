@@ -1,10 +1,11 @@
 #pragma once
+using namespace std;
 #include <string>
 #include <set>
 
 struct Staff {
-    std::string id;
+    string id;
     int load;
     int assigned = 0;
-    std::set<std::string> expertise;
+    set<std::string> expertise;
 };

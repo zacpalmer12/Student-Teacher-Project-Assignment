@@ -1,4 +1,6 @@
 #pragma once
+using namespace std;
+
 #include <unordered_map>
 #include <vector>
 #include "Staff.h"
@@ -6,8 +8,8 @@
 #include "Student.h"
 
 int computeScore(
-    const std::vector<Student>& students,
-    const std::unordered_map<int, Project>& projects,
-    const std::unordered_map<std::string, Staff>& staff
+    const vector<Student>& students,
+    const unordered_map<int, Project>& projects,
+    const unordered_map<string, Staff>& staff
 );
 
