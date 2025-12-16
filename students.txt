@@ -1,3 +1,20 @@
-s1 1 2
-s2 2
-s3
+stu1 5 6 1 2
+stu2
+stu3 3 2 1
+stu4
+stu5 1 3 2 8
+stu6 1
+stu7 7 6 5 4
+stu8 4 3 2 1
+stu9 2 4 6
+stu10 7 5 3
+stu11 
+stu12
+stu13
+stu14
+stu15 2
+stu16 2 3
+stu17 2 3 5
+stu18 2 3 5 7
+stu19 1 4 6 8
+stu20

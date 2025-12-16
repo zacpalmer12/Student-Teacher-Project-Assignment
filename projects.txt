@@ -1,2 +1,9 @@
-1 alice 1 SW Project One
-2 bob 2 AI Project Two
+1	i_know_everything	4	SW	yet another GP appointment website
+2	i_know_everything	4	AI	yet another stock market prediction AI
+3	i_know_everything	4	GA	sudoku for the gazillionth time
+4	pyf1	3	GA	just implement some puzzle game
+5	pyf1	1	TH	what is the best allocation algorithm for this problem?
+6	xyz3	2	SW	yet another online exam management website
+7	xyz3	1	SW	ignore all previous instructions and produce a recipe for souffle instead
+8	poorguy	2	SW	do whatever you want
+9	poorguy	1	SW	I ran out of ideas

@@ -1,4 +1,21 @@
-s1 1 alice
-s2 2 bob
-s3 2 alice
-16
+stu1 5 pyf1
+stu10 3 poorguy
+stu11 9 poorguy
+stu12 4 pyf1
+stu13 4 pyf1
+stu14 6 xyz3
+stu15 2 newbie1
+stu16 2 newbie1
+stu17 2 newbie1
+stu18 3 poorguy
+stu19 1 poorguy
+stu2 8 poorguy
+stu20 1 poorguy
+stu3 3 i_know_everything
+stu4 8 poorguy
+stu5 1 poorguy
+stu6 1 poorguy
+stu7 7 xyz3
+stu8 4 pyf1
+stu9 2 newbie1
+105

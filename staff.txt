@@ -1,3 +1,5 @@
-alice 2 SW ML
-bob 1 AI
-
+pyf1 4 TH GA
+i_know_everything 1 SW AI GA TH
+xyz3 2 SW AI
+newbie1 4 AI
+poorguy 10 SW

@@ -1,7 +1,8 @@
 #include "Allocator.h"
 
-#include <unordered_set>
+#include <algorithm>
 #include <string>
+#include <vector>
 
 namespace
 {
@@ -9,6 +10,7 @@ namespace
     {
         return st.assigned < st.load;
     }
+
     bool AssignProjectIfNeeded(
         Student& s,
         std::unordered_map<int, Project>& projects,
@@ -29,13 +31,14 @@ namespace
 
     bool EnsureStudentHasAnyProject(
         Student& s,
-        std::unordered_map<int, Project>& projects)
+        std::unordered_map<int, Project>& projects,
+        const std::vector<int>& projectIds)
     {
         if (s.assignedProject != -1)
             return true;
 
-        for (auto& kv : projects) {
-            Project& p = kv.second;
+        for (int pid : projectIds) {
+            Project& p = projects.at(pid);
             if (p.assigned < p.multiplicity) {
                 s.assignedProject = p.id;
                 p.assigned++;
@@ -56,11 +59,11 @@ namespace
         if (s.assignedProject == -1)
             return false;
 
-        auto pit = projects.find(s.assignedProject);
-        if (pit == projects.end())
+        if (!s.assignedSupervisor.empty())
             return false;
 
-        if (!s.assignedSupervisor.empty())
+        auto pit = projects.find(s.assignedProject);
+        if (pit == projects.end())
             return false;
 
         s.assignedSupervisor = st.id;
@@ -74,6 +77,21 @@ void allocate(
     std::unordered_map<int, Project>& projects,
     std::unordered_map<std::string, Staff>& staff)
 {
+    // Deterministic iteration order for staff and projects
+    std::vector<std::string> staffIds;
+    staffIds.reserve(staff.size());
+    for (const auto& kv : staff) {
+        staffIds.push_back(kv.first);
+    }
+    std::sort(staffIds.begin(), staffIds.end());
+
+    std::vector<int> projectIds;
+    projectIds.reserve(projects.size());
+    for (const auto& kv : projects) {
+        projectIds.push_back(kv.first);
+    }
+    std::sort(projectIds.begin(), projectIds.end());
+
     // -------------------------
     // Phase 1: Student -> Project using preferences
     // -------------------------
@@ -88,21 +106,18 @@ void allocate(
     }
 
     // -------------------------
-    // Phase 2: Staff -> Students (assign supervisors; can also allocate projects to unassigned students)
+    // Phase 2: Staff -> Students
     // Passes: own projects -> expertise -> any
     // -------------------------
 
-    // Build quick index: projectId -> list of student indices assigned to that project
-    // We'll rebuild this lazily when needed by scanning; simplicity over micro-optimisation.
-
     // 2.1 Own projects
-    for (auto& stPair : staff) {
-        Staff& st = stPair.second;
+    for (const auto& sid : staffIds) {
+        Staff& st = staff.at(sid);
 
         if (!CanSupervise(st))
             continue;
 
-        // First, supervise students already on st's projects
+        // supervise students already on st's projects
         for (auto& s : students) {
             if (!CanSupervise(st))
                 break;
@@ -119,7 +134,7 @@ void allocate(
             }
         }
 
-        // Then, if still capacity, allocate + supervise unassigned students onto st's projects
+        // allocate + supervise unassigned students onto st's projects
         for (auto& s : students) {
             if (!CanSupervise(st))
                 break;
@@ -128,9 +143,8 @@ void allocate(
                 continue;
 
             if (s.assignedProject == -1) {
-                // try put them on one of st's projects with capacity
-                for (auto& pkv : projects) {
-                    Project& p = pkv.second;
+                for (int pid : projectIds) {
+                    Project& p = projects.at(pid);
                     if (p.proposer == st.id && p.assigned < p.multiplicity) {
                         s.assignedProject = p.id;
                         p.assigned++;
@@ -143,13 +157,13 @@ void allocate(
     }
 
     // 2.2 Expertise projects
-    for (auto& stPair : staff) {
-        Staff& st = stPair.second;
+    for (const auto& sid : staffIds) {
+        Staff& st = staff.at(sid);
 
         while (CanSupervise(st)) {
             bool didSomething = false;
 
-            // supervise students already allocated to projects in expertise
+            // supervise already allocated students in expertise
             for (auto& s : students) {
                 if (!CanSupervise(st))
                     break;
@@ -169,7 +183,7 @@ void allocate(
                 }
             }
 
-            // allocate + supervise unassigned students into expertise projects if needed
+            // allocate + supervise unassigned students into expertise projects
             for (auto& s : students) {
                 if (!CanSupervise(st))
                     break;
@@ -178,8 +192,8 @@ void allocate(
                     continue;
 
                 if (s.assignedProject == -1) {
-                    for (auto& pkv : projects) {
-                        Project& p = pkv.second;
+                    for (int pid : projectIds) {
+                        Project& p = projects.at(pid);
                         if (p.assigned < p.multiplicity &&
                             st.expertise.find(p.subject) != st.expertise.end()) {
 
@@ -200,13 +214,13 @@ void allocate(
     }
 
     // 2.3 Any projects
-    for (auto& stPair : staff) {
-        Staff& st = stPair.second;
+    for (const auto& sid : staffIds) {
+        Staff& st = staff.at(sid);
 
         while (CanSupervise(st)) {
             bool didSomething = false;
 
-            // supervise any already-allocated students who still lack a supervisor
+            // supervise any allocated students without a supervisor
             for (auto& s : students) {
                 if (!CanSupervise(st))
                     break;
@@ -219,7 +233,7 @@ void allocate(
                 }
             }
 
-            // allocate + supervise any remaining unassigned students
+            // allocate + supervise remaining unassigned students
             for (auto& s : students) {
                 if (!CanSupervise(st))
                     break;
@@ -228,7 +242,7 @@ void allocate(
                     continue;
 
                 if (s.assignedProject == -1) {
-                    if (!EnsureStudentHasAnyProject(s, projects))
+                    if (!EnsureStudentHasAnyProject(s, projects, projectIds))
                         continue;
 
                     if (TryAssignSupervisorToStudent(s, st, projects)) {
@@ -243,20 +257,18 @@ void allocate(
     }
 
     // -------------------------
-    // Final safety: ensure every student has a project and supervisor (fallback)
+    // Final safety: ensure every student has a project and supervisor
     // -------------------------
-    // Ensure projects for any still unassigned
     for (auto& s : students) {
-        EnsureStudentHasAnyProject(s, projects);
+        EnsureStudentHasAnyProject(s, projects, projectIds);
     }
 
-    // Ensure supervisors for any still without one
     for (auto& s : students) {
         if (!s.assignedSupervisor.empty())
             continue;
 
-        for (auto& stPair : staff) {
-            Staff& st = stPair.second;
+        for (const auto& sid : staffIds) {
+            Staff& st = staff.at(sid);
             if (TryAssignSupervisorToStudent(s, st, projects))
                 break;
         }
