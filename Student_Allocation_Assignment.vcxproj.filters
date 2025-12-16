@@ -33,6 +33,9 @@
     <ClCompile Include="Makefile">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CheckAlloc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Staff.h">

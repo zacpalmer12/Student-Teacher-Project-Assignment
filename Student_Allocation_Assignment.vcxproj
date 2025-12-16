@@ -124,6 +124,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Allocator.cpp" />
+    <ClCompile Include="CheckAlloc.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Makefile" />
     <ClCompile Include="Parser.cpp" />
