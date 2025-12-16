@@ -18,3 +18,4 @@ Score.o: Score.cpp Score.h Staff.h Project.h Student.h
 
 clean:
 	rm -f *.o GenAlloc
+	
