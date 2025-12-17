@@ -15,7 +15,6 @@ int computeScore(
 
         for (std::size_t i = 0; i < s.choices.size(); ++i) {
             if (s.choices[i] == s.assignedProject) {
-                // i = 0 -> first choice -> 4 points
                 prefScore = 4 - static_cast<int>(i);
                 break;
             }

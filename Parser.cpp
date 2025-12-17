@@ -22,7 +22,8 @@ void parseStaff(
         s.id = id;
         s.load = load;
 
-        std::getline(file, area); // rest of line
+        // rest of line
+        std::getline(file, area);
         std::istringstream iss(area);
         std::string expertise;
 
@@ -48,7 +49,8 @@ void parseProjects(
     std::string proposer, subject, title;
 
     while (file >> id >> proposer >> multiplicity >> subject) {
-        std::getline(file, title); // project title (with spaces)
+        // project title (with spaces)
+        std::getline(file, title); 
 
         Project p;
         p.id = id;

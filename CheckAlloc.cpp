@@ -6,7 +6,7 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <vector>
-
+#include <limits>
 #include "Parser.h"
 #include "Project.h"
 #include "Staff.h"
@@ -19,12 +19,12 @@ struct Assignment {
 
 namespace
 {
-    constexpr int kNoRank = 1'000'000;
+    constexpr int kNoRank = std::numeric_limits<int>::max();
 
     int StudentRankForProject(const Student& s, int pid)
     {
         for (int i = 0; i < static_cast<int>(s.choices.size()); ++i) {
-            if (s.choices[i] == pid) return i; // 0..3
+            if (s.choices[i] == pid) return i;
         }
         return kNoRank;
     }
@@ -32,7 +32,7 @@ namespace
     bool StudentStrictlyPrefers(const Student& s, int pidA, int pidB)
     {
         const int ra = StudentRankForProject(s, pidA);
-        if (ra == kNoRank) return false; // must actually be on list
+        if (ra == kNoRank) return false; 
         const int rb = StudentRankForProject(s, pidB);
         return ra < rb;
     }
@@ -85,7 +85,7 @@ int main(int argc, char* argv[])
         return 0;
     }
 
-    // Read alloc file (ignore final score-only line if present)
+    // Read out file
     std::unordered_map<std::string, Assignment> alloc;
     alloc.reserve(students.size());
 
@@ -278,7 +278,7 @@ int main(int argc, char* argv[])
             }
         }
     }
-
+    //If nothing is INVALID
     std::cout << "VALID\n";
     return 0;
 }
