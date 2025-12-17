@@ -9,7 +9,7 @@ GenAlloc: main.o Parser.o Allocator.o Score.o
 CheckAlloc: CheckAlloc.o Parser.o
 	$(CXX) $(CXXFLAGS) -o CheckAlloc CheckAlloc.o Parser.o
 
-main.o: main.cpp Parser.h Allocator.h Score.h
+main.o: main.cpp Parser.h Allocator.h Score.h Staff.h Project.h Student.h
 	$(CXX) $(CXXFLAGS) -c main.cpp
 
 CheckAlloc.o: CheckAlloc.cpp Parser.h Staff.h Project.h Student.h

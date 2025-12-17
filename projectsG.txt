@@ -1,0 +1,2 @@
+1 alice 1 SW P1
+2 bob 1 AI P2

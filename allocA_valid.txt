@@ -1,0 +1,4 @@
+s1 1 alice
+s2 2 bob
+s3 2 bob
+6

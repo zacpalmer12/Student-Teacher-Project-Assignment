@@ -1,0 +1,2 @@
+alice 2 AI
+bob 2 SW
