@@ -1,2 +1,0 @@
-1 alice 1 SW Project One
-2 bob 2 AI Project Two
