@@ -1,5 +1,4 @@
 #include "Score.h"
-
 #include <algorithm>
 
 int computeScore(
@@ -9,9 +8,8 @@ int computeScore(
 {
     int score = 0;
 
-    // -------------------------
-    // Student preference score
-    // -------------------------
+
+    // student preference score
     for (const auto& s : students) {
         int prefScore = 0;
 
@@ -26,9 +24,8 @@ int computeScore(
         score += prefScore;
     }
 
-    // -------------------------
+
     // Supervisor preference score
-    // -------------------------
     for (const auto& s : students) {
         if (s.assignedProject == -1 || s.assignedSupervisor.empty())
             continue;
@@ -48,7 +45,7 @@ int computeScore(
         else if (st.expertise.find(p.subject) != st.expertise.end()) {
             score += 2;
         }
-        // else +0
+        // else we add nothing
     }
 
     return score;
