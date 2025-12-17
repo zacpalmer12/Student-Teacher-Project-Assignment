@@ -92,9 +92,9 @@ void allocate(
     }
     std::sort(projectIds.begin(), projectIds.end());
 
-    // -------------------------
+
     // Phase 1: Student -> Project using preferences
-    // -------------------------
+
     for (auto& student : students) {
         if (student.assignedProject != -1)
             continue;
@@ -105,10 +105,8 @@ void allocate(
         }
     }
 
-    // -------------------------
     // Phase 2: Staff -> Students
     // Passes: own projects -> expertise -> any
-    // -------------------------
 
     // 2.1 Own projects
     for (const auto& sid : staffIds) {
@@ -256,9 +254,8 @@ void allocate(
         }
     }
 
-    // -------------------------
     // Final safety: ensure every student has a project and supervisor
-    // -------------------------
+
     for (auto& s : students) {
         EnsureStudentHasAnyProject(s, projects, projectIds);
     }

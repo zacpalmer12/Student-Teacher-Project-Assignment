@@ -135,9 +135,7 @@ int main(int argc, char* argv[])
         return 0;
     }
 
-    // -------------------------
     // LEGALITY CHECKS
-    // -------------------------
     std::unordered_map<int, int> projectCount;
     std::unordered_map<std::string, int> staffCount;
     projectCount.reserve(projects.size());
@@ -189,9 +187,7 @@ int main(int argc, char* argv[])
         superviseesByStaff[kv.second.supervisorId].push_back(kv.first);
     }
 
-    // -------------------------
     // STABILITY RULE 1
-    // -------------------------
     for (const auto& s : students) {
         const Assignment& a = alloc.at(s.id);
         const int currentPid = a.projectId;
@@ -206,9 +202,7 @@ int main(int argc, char* argv[])
         }
     }
 
-    // -------------------------
     // STABILITY RULE 2
-    // -------------------------
     std::vector<std::string> ids;
     ids.reserve(students.size());
     for (const auto& s : students) ids.push_back(s.id);
@@ -229,9 +223,7 @@ int main(int argc, char* argv[])
         }
     }
 
-    // -------------------------
     // STABILITY RULE 3
-    // -------------------------
     for (const auto& s : students) {
         const Assignment& a = alloc.at(s.id);
         const int studentRank = StudentRankForProject(s, a.projectId);
@@ -251,9 +243,8 @@ int main(int argc, char* argv[])
         }
     }
 
-    // -------------------------
     // STABILITY RULE 4
-    // -------------------------
+    
     std::vector<std::string> supervisingStaff;
     supervisingStaff.reserve(superviseesByStaff.size());
     for (const auto& kv : superviseesByStaff) {
