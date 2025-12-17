@@ -180,7 +180,7 @@ int main(int argc, char* argv[])
         return used < pit->second.multiplicity;
         };
 
-    // supervisor -> list of supervisee student ids
+    // map of students supervised by each supervisor
     std::unordered_map<std::string, std::vector<std::string>> superviseesByStaff;
     superviseesByStaff.reserve(staff.size());
     for (const auto& kv : alloc) {
