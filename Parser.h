@@ -1,5 +1,5 @@
 #pragma once
-using namespace std;
+
 
 
 #include <unordered_map>
@@ -11,16 +11,16 @@ using namespace std;
 #include "Student.h"
 
 void parseStaff(
-    const string& filename,
-    unordered_map<string, Staff>& staff
+    const std::string& filename,
+    std::unordered_map<std::string, Staff>& staff
 );
 
 void parseProjects(
-    const string& filename,
-    unordered_map<int, Project>& projects
+    const std::string& filename,
+    std::unordered_map<int, Project>& projects
 );
 
 void parseStudents(
-    const string& filename,
-    vector<Student>& students
+    const std::string& filename,
+    std::vector<Student>& students
 );

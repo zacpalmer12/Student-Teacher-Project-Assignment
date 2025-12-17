@@ -1,5 +1,4 @@
-pyf1 4 TH GA
-i_know_everything 1 SW AI GA TH
-xyz3 2 SW AI
-newbie1 4 AI
-poorguy 10 SW
+staff1 1 SW
+staff2 2 SW
+staff3 1 SW
+staff4 1 SW

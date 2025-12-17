@@ -1,31 +1,30 @@
 #include "Parser.h"
-using namespace std;
 #include <fstream>
 #include <sstream>
 #include <iostream>
 
 void parseStaff(
-    const string& filename,
-    unordered_map<string, Staff>& staff
+    const std::string& filename,
+    std::unordered_map<std::string, Staff>& staff
 ) {
-    ifstream file(filename);
+    std::ifstream file(filename);
     if (!file) {
-        cerr << "Failed to open staff file\n";
+        std::cerr << "Failed to open staff file\n";
         return;
     }
 
-    string id;
+    std::string id;
     int load;
-    string area;
+    std::string area;
 
     while (file >> id >> load) {
         Staff s;
         s.id = id;
         s.load = load;
 
-        getline(file, area); // rest of line
-        istringstream iss(area);
-        string expertise;
+        std::getline(file, area); // rest of line
+        std::istringstream iss(area);
+        std::string expertise;
 
         while (iss >> expertise) {
             s.expertise.insert(expertise);
@@ -36,20 +35,20 @@ void parseStaff(
 }
 
 void parseProjects(
-    const string& filename,
-    unordered_map<int, Project>& projects
+    const std::string& filename,
+    std::unordered_map<int, Project>& projects
 ) {
-    ifstream file(filename);
+    std::ifstream file(filename);
     if (!file) {
-        cerr << "Failed to open projects file\n";
+        std::cerr << "Failed to open projects file\n";
         return;
     }
 
     int id, multiplicity;
-    string proposer, subject, title;
+    std::string proposer, subject, title;
 
     while (file >> id >> proposer >> multiplicity >> subject) {
-        getline(file, title); // project title (with spaces)
+        std::getline(file, title); // project title (with spaces)
 
         Project p;
         p.id = id;
@@ -62,18 +61,18 @@ void parseProjects(
 }
 
 void parseStudents(
-    const string& filename,
-    vector<Student>& students
+    const std::string& filename,
+    std::vector<Student>& students
 ) {
-    ifstream file(filename);
+    std::ifstream file(filename);
     if (!file) {
-        cerr << "Failed to open students file\n";
+        std::cerr << "Failed to open students file\n";
         return;
     }
 
-    string line;
-    while (getline(file, line)) {
-        istringstream iss(line);
+    std::string line;
+    while (std::getline(file, line)) {
+        std::istringstream iss(line);
 
         Student s;
         iss >> s.id;

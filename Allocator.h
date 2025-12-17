@@ -1,5 +1,4 @@
 #pragma once
-using namespace std;
 #include <unordered_map>
 #include <vector>
 #include "Staff.h"
@@ -7,8 +6,8 @@ using namespace std;
 #include "Student.h"
 
 void allocate(
-    vector<Student>& students,
-    unordered_map<int, Project>& projects,
-    unordered_map<string, Staff>& staff
+    std::vector<Student>& students,
+    std::unordered_map<int, Project>& projects,
+    std::unordered_map<std::string, Staff>& staff
 );
 
